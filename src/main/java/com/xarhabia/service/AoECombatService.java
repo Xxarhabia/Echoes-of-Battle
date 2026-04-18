@@ -1,5 +1,6 @@
 package com.xarhabia.service;
 
+import com.xarhabia.config.StatConfig;
 import com.xarhabia.manager.PlayerStatsManager;
 import com.xarhabia.model.PlayerStats;
 import net.minecraft.entity.LivingEntity;
@@ -13,8 +14,14 @@ public class AoECombatService {
     public static void applyAoE(PlayerEntity player, LivingEntity mainTarget, float baseDamage) {
         PlayerStats stats = PlayerStatsManager.getStats(player.getUuid());
 
-        double radius = stats.getAoeRadius();
-        float aoeDamage = baseDamage * (float) stats.getAoeDamageMultiplayer();
+        double radius = Math.min(
+                stats.getAoeRadius() + stats.getStrength() * StatConfig.AOE_RADIUS_PER_STR,
+                StatConfig.MAX_AOE_RADIUS
+        );
+        float aoeDamage = baseDamage * (float) Math.min(
+                stats.getAoeDamageMultiplayer() + stats.getStrength() * StatConfig.AOE_DAMAGE_PER_STR,
+                StatConfig.MAX_AOE_DAMAGE_MULTI
+        );
 
         World world = player.getWorld();
 

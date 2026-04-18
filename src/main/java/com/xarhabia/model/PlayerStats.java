@@ -1,5 +1,7 @@
 package com.xarhabia.model;
 
+import com.xarhabia.config.StatConfig;
+
 public class PlayerStats {
 
     private int xp;
@@ -17,9 +19,16 @@ public class PlayerStats {
     private long lastHitTime;
     private long comboTimeout;
 
+    private int strength;
+    private int vitality;
+    private int agility;
+    private int sprintTicks;
+    private int sprintCooldownTicks;
+
     public PlayerStats() {
         this.xp = 0;
         this.level = 1;
+
         this.criticChance = 0.1;
         this.criticDamage = 1.5;
         this.damageBonus = 0.0;
@@ -30,18 +39,41 @@ public class PlayerStats {
         this.aoeBurstMultiplier = 1.5;
         this.lastHitTime = 0;
         this.comboTimeout = 3000;
+
+        this.strength = 1;
+        this.vitality = 1;
+        this.agility = 1;
+        this.sprintTicks = 0;
+        this.sprintCooldownTicks = 0;
+    }
+
+    public void incrementSprintCooldown() {
+        this.sprintCooldownTicks++;
+    }
+
+    public int getSprintCooldownTicks() {
+        return this.sprintCooldownTicks;
+    }
+
+    public int getMaxSprintCooldown() {
+        return 100;
     }
 
     public void addXp(int amount) {
         this.xp += amount;
-        if (xp >= level * 10) {
-            xp = 0;
+
+        while (xp >= level * 10) {
+            xp -= level * 10;
             level++;
+
+            strength++;
+            vitality++;
+            agility++;
 
             criticChance += 0.01;
             criticDamage += 0.05;
 
-            System.out.println("Subiste a nivel " + level);
+            System.out.println("Subiste de nivel " + level);
         }
     }
 
@@ -55,6 +87,27 @@ public class PlayerStats {
 
         hitCounter++;
         lastHitTime = now;
+    }
+    public void incrementSprintTicks() {
+        this.sprintTicks++;
+    }
+
+    public void resetSprintCooldown() {
+        this.sprintCooldownTicks = 0;
+    }
+    public void resetSprintTicks() {
+        this.sprintTicks = 0;
+    }
+
+    public int getSprintTicks() {
+        return sprintTicks;
+    }
+
+    public int getMaxSprintTime() {
+        return Math.min(
+                agility * StatConfig.SPRINT_TIME_PER_AGI,
+                StatConfig.MAX_SPRINT_TIME
+        );
     }
 
     public int getLevel() {
@@ -99,5 +152,17 @@ public class PlayerStats {
 
     public float getComboProgress() {
         return (float) hitCounter / hitsForAoE;
+    }
+
+    public int getStrength() {
+        return strength;
+    }
+
+    public int getVitality() {
+        return vitality;
+    }
+
+    public int getAgility() {
+        return agility;
     }
 }

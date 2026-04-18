@@ -1,5 +1,6 @@
 package com.xarhabia;
 
+import com.xarhabia.config.PlayerTickHandler;
 import com.xarhabia.event.CombatEvents;
 import net.fabricmc.api.ModInitializer;
 
@@ -21,5 +22,6 @@ public class CombatMod implements ModInitializer {
 		// Proceed with mild caution.
 
 		CombatEvents.register();
+		PlayerTickHandler.register();
 	}
 }
