@@ -1,6 +1,7 @@
 package com.xarhabia.model;
 
 import com.xarhabia.config.StatConfig;
+import com.xarhabia.util.enums.SprintState;
 
 public class PlayerStats {
 
@@ -24,6 +25,10 @@ public class PlayerStats {
     private int agility;
     private int sprintTicks;
     private int sprintCooldownTicks;
+    private double stamina;
+    private double maxStamina;
+
+    private SprintState sprintState;
 
     public PlayerStats() {
         this.xp = 0;
@@ -45,6 +50,29 @@ public class PlayerStats {
         this.agility = 1;
         this.sprintTicks = 0;
         this.sprintCooldownTicks = 0;
+        this.sprintState = SprintState.IDLE;
+        this.maxStamina = 100;
+        this.stamina = maxStamina;
+    }
+
+    public double getStamina() {
+        return stamina;
+    }
+
+    public void setStamina(double stamina) {
+        this.stamina = Math.max(0, Math.min(stamina, getMaxStamina()));
+    }
+
+    public double getMaxStamina() {
+        return 100 + (agility * 2);
+    }
+
+    public SprintState getSprintState() {
+        return sprintState;
+    }
+
+    public void setSprintState(SprintState sprintState) {
+        this.sprintState = sprintState;
     }
 
     public void incrementSprintCooldown() {

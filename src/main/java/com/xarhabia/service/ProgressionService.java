@@ -4,7 +4,6 @@ package com.xarhabia.service;
 import com.xarhabia.config.StatConfig;
 import com.xarhabia.manager.PlayerStatsManager;
 import com.xarhabia.model.PlayerStats;
-import com.xarhabia.util.CombatRandom;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.player.PlayerEntity;
 

@@ -25,4 +25,9 @@ public class StatConfig {
     // VITALIDAD
     public static final double MAX_HEALTH_BONUS = 40;
     public static final double HEALTH_PER_VIT = 1.0;
+
+    //STAMINA
+    public static final double STAMINA_DRAIN = 0.8;
+    public static final double BASE_STAMINA_REGEN = 0.5;
+    public static final double STAMINA_REGEN_PER_AGI = 0.02;
 }
