@@ -59,21 +59,7 @@ public class ProgressionService {
 
         player.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED)
                 .setBaseValue(0.1 + walkBonus);
-    }
 
-    public static void applySprintBoost(PlayerEntity player) {
-        PlayerStats stats = PlayerStatsManager.getStats(player.getUuid());
-
-        double walkBonus = Math.min(
-                stats.getAgility() * StatConfig.WALK_SPEED_PER_AGI,
-                StatConfig.MAX_WALK_SPEED
-        );
-
-        double sprintBonus = Math.min(
-                stats.getAgility() * StatConfig.SPRINT_SPEED_PER_AGI,
-                StatConfig.MAX_SPRINT_SPEED
-        );
-
-        player.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED).setBaseValue(0.1 + walkBonus + sprintBonus);
+        System.out.println("Agility aumentada: " + stats.getAgility());
     }
 }

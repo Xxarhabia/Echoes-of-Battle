@@ -2,88 +2,41 @@ package com.xarhabia.handlers;
 
 import com.xarhabia.config.StatConfig;
 import com.xarhabia.model.PlayerStats;
-import com.xarhabia.service.ProgressionService;
-import com.xarhabia.util.enums.SprintState;
+import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.server.network.ServerPlayerEntity;
 
 public class SprintStateHandler {
 
-    public static void handle(ServerPlayerEntity player, PlayerStats stats) {
-        if (stats.getStamina() <= 0) {
-            player.setSprinting(false);
-        }
+    public static void handleStamina(ServerPlayerEntity player, PlayerStats stats) {
+        boolean wants = stats.isWantsToSprint();
+        double currentStamina = stats.getStamina();
 
-        switch (stats.getSprintState()) {
-            case IDLE -> handleIdle(player, stats);
-            case SPRINTING -> handleSprinting(player, stats);
-            case EXHAUSTED -> handleExhausted(player, stats);
-            case COOLDOWN -> handleCooldown(player, stats);
-        }
-    }
-
-    private static void handleIdle(ServerPlayerEntity player, PlayerStats stats) {
-
-        double regen = StatConfig.BASE_STAMINA_REGEN +
+        double regen =  StatConfig.BASE_STAMINA_REGEN +
                 (stats.getAgility() * StatConfig.STAMINA_REGEN_PER_AGI);
 
-        stats.setStamina(stats.getStamina() + regen);
+        boolean hasStamina = currentStamina > 1; //Tendra stamina solo si la stamina actual es mayor a 1%
 
-        ProgressionService.applyAgility(player);
+        var attr = player.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED);
+        double baseSpeed = 0.1 + (stats.getAgility() * StatConfig.WALK_SPEED_PER_AGI);
 
-        if (stats.getStamina() <= 1) {
-            player.setSprinting(false);
-            return;
-        }
+        if (wants) {
+            player.setSprinting(true);
 
-        if (player.isSprinting()) {
-            stats.setSprintState(SprintState.SPRINTING);
-        }
-    }
-
-    private static void handleSprinting(ServerPlayerEntity player, PlayerStats stats) {
-
-        // si deja de sprintar manualmente
-        if (!player.isSprinting()) {
-            stats.setSprintState(SprintState.IDLE);
-            return;
-        }
-
-        stats.setStamina(stats.getStamina() - StatConfig.STAMINA_DRAIN);
-
-        if (stats.getStamina() > 0) {
-            ProgressionService.applySprintBoost(player);
+            if (hasStamina) {
+                attr.setBaseValue(baseSpeed);
+                stats.setStamina(currentStamina - StatConfig.STAMINA_DRAIN);
+            } else {
+                attr.setBaseValue(baseSpeed * 0.5);
+            }
         } else {
-            stats.setStamina(0);
-            player.setSprinting(false); //BLOQUEAMOS SPRINT
-            stats.setSprintState(SprintState.EXHAUSTED);
+            player.setSprinting(false);
+            attr.setBaseValue(baseSpeed);
+            stats.setStamina(currentStamina + regen);
         }
-    }
 
-    private static void handleExhausted(ServerPlayerEntity player, PlayerStats stats) {
-
-        //forzar detener sprint
-        player.setSprinting(false);
-
-        double regen = StatConfig.BASE_STAMINA_REGEN +
-                (stats.getAgility() * StatConfig.STAMINA_REGEN_PER_AGI);
-
-        stats.setStamina(stats.getStamina() + regen);
-
-        ProgressionService.applyAgility(player);
-
-        // 🔥 IMPORTANTE: no salir demasiado pronto
-        if (stats.getStamina() > stats.getMaxStamina() * 0.3) {
-            stats.setSprintState(SprintState.IDLE);
-        }
-    }
-
-    private static void handleCooldown(ServerPlayerEntity player, PlayerStats stats) {
-        player.setSprinting(false);
-        stats.incrementSprintTicks();
-        ProgressionService.applyAgility(player);
-        if (stats.getSprintCooldownTicks() >= stats.getMaxSprintCooldown()) {
-            stats.resetSprintTicks();
-            stats.setSprintState(SprintState.IDLE);
+        if (stats.getStamina() < 0) stats.setStamina(0);
+        if (stats.getStamina() > stats.getMaxStamina()) {
+            stats.setStamina(stats.getMaxStamina());
         }
     }
 }

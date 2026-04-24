@@ -27,6 +27,7 @@ public class PlayerStats {
     private int sprintCooldownTicks;
     private double stamina;
     private double maxStamina;
+    private boolean wantsToSprint;
 
     private SprintState sprintState;
 
@@ -53,6 +54,14 @@ public class PlayerStats {
         this.sprintState = SprintState.IDLE;
         this.maxStamina = 100;
         this.stamina = maxStamina;
+    }
+
+    public boolean isWantsToSprint() {
+        return wantsToSprint;
+    }
+
+    public void setWantsToSprint(boolean wantsToSprint) {
+        this.wantsToSprint = wantsToSprint;
     }
 
     public double getStamina() {

@@ -17,7 +17,8 @@ public class PlayerTickHandler {
             for (ServerPlayerEntity player : server.getPlayerManager().getPlayerList()) {
                 if (player.isSpectator()) continue;
                 PlayerStats stats = PlayerStatsManager.getStats(player.getUuid());
-                SprintStateHandler.handle(player, stats);
+
+                SprintStateHandler.handleStamina(player, stats);
 
                 //Sincronizacion stamina -> cliente
                 if (player.age % 5 == 0) {
