@@ -21,14 +21,15 @@ public class CombatMod implements ModInitializer {
 		CombatEvents.register();
 		PlayerTickHandler.register();
 
+		// Recibimos llamadas del
 		ServerPlayNetworking.registerGlobalReceiver(
 				SprintInputPacket.ID,
 				(server, player, handler, buf, responseSender) -> {
-					boolean wantsToSprint = buf.readBoolean();
+					boolean wantsToSprint = buf.readBoolean(); //Leemos el contenido empaquetado del cliente
 
 					server.execute(() -> {
 						PlayerStats stats = PlayerStatsManager.getStats(player.getUuid());
-						stats.setWantsToSprint(wantsToSprint);
+						stats.setWantsToSprint(wantsToSprint); //Lo implementamos
 					});
 				}
 		);

@@ -33,29 +33,24 @@ public class CombatModClient implements ClientModInitializer {
 		ClientTickEvents.END_CLIENT_TICK.register(client -> {
 			if (client.player == null) return;
 
-			long window = client.getWindow().getHandle();
-
-			boolean sprintPressed = GLFW.glfwGetKey(window, GLFW.GLFW_KEY_LEFT_CONTROL) == GLFW.GLFW_PRESS;
-			boolean movingForward = client.player.input.pressingForward;
-
-			boolean current = sprintPressed && movingForward;
+			boolean current = client.player.isSprinting();
 
 			if (client.player.age % 20 == 0) {
 				var vel = client.player.getVelocity();
-
 				double speed = Math.sqrt(vel.x * vel.x + vel.z * vel.z);
 
 				System.out.println(
 						"CLIENT SPEED: " + speed +
 								" | X: " + vel.x +
-								" | Z: " + vel.z
+								" | Z: " + vel.z +
+								" | SPRINTING: " + current
 				);
 			}
 
 			if (current != lastState) {
 				PacketByteBuf buf = PacketByteBufs.create();
-				buf.writeBoolean(current);
-				ClientPlayNetworking.send(SprintInputPacket.ID, buf);
+				buf.writeBoolean(current); //empaquetado
+				ClientPlayNetworking.send(SprintInputPacket.ID, buf); //envio al servidor
 				lastState = current;
 			}
 		});
