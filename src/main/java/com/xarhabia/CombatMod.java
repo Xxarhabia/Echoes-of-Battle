@@ -1,10 +1,9 @@
 package com.xarhabia;
 
-import com.xarhabia.config.PlayerTickHandler;
-import com.xarhabia.event.CombatEvents;
-import com.xarhabia.manager.PlayerStatsManager;
-import com.xarhabia.model.PlayerStats;
-import com.xarhabia.network.SprintInputPacket;
+import com.xarhabia.combat.CombatEvents;
+import com.xarhabia.stats.PlayerStatsManager;
+import com.xarhabia.stats.PlayerStats;
+import com.xarhabia.sprint.SprintInputPacket;
 import net.fabricmc.api.ModInitializer;
 
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;

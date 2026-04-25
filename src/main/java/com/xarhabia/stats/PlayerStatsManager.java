@@ -1,6 +1,4 @@
-package com.xarhabia.manager;
-
-import com.xarhabia.model.PlayerStats;
+package com.xarhabia.stats;
 
 import java.util.HashMap;
 import java.util.UUID;

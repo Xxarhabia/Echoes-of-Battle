@@ -1,4 +1,4 @@
-package com.xarhabia.service;
+package com.xarhabia.combat;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.particle.ParticleTypes;

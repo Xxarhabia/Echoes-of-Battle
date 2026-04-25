@@ -1,11 +1,11 @@
-package com.xarhabia.service;
+package com.xarhabia.progression;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.boss.WitherEntity;
 import net.minecraft.entity.boss.dragon.EnderDragonEntity;
 import net.minecraft.entity.mob.*;
 
-public class CombatXpService {
+public class XpService {
 
     public static int getXpForKill(LivingEntity entity) {
 

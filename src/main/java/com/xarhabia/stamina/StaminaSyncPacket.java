@@ -1,4 +1,4 @@
-package com.xarhabia.network;
+package com.xarhabia.stamina;
 
 import net.minecraft.util.Identifier;
 

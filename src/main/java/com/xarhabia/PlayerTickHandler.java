@@ -1,9 +1,9 @@
-package com.xarhabia.config;
+package com.xarhabia;
 
-import com.xarhabia.handlers.SprintStateHandler;
-import com.xarhabia.manager.PlayerStatsManager;
-import com.xarhabia.model.PlayerStats;
-import com.xarhabia.network.StaminaSyncPacket;
+import com.xarhabia.stamina.StaminaHandler;
+import com.xarhabia.stats.PlayerStatsManager;
+import com.xarhabia.stats.PlayerStats;
+import com.xarhabia.stamina.StaminaSyncPacket;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -18,7 +18,7 @@ public class PlayerTickHandler {
                 if (player.isSpectator()) continue;
                 PlayerStats stats = PlayerStatsManager.getStats(player.getUuid());
 
-                SprintStateHandler.handleStamina(player, stats);
+                StaminaHandler.handleStamina(player, stats);
 
                 //Sincronizacion stamina -> cliente
                 if (player.age % 5 == 0) {

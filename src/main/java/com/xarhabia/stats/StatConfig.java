@@ -1,4 +1,4 @@
-package com.xarhabia.config;
+package com.xarhabia.stats;
 
 public class StatConfig {
 

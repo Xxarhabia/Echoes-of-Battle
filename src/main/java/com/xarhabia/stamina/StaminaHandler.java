@@ -1,11 +1,11 @@
-package com.xarhabia.handlers;
+package com.xarhabia.stamina;
 
-import com.xarhabia.config.StatConfig;
-import com.xarhabia.model.PlayerStats;
+import com.xarhabia.stats.StatConfig;
+import com.xarhabia.stats.PlayerStats;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.server.network.ServerPlayerEntity;
 
-public class SprintStateHandler {
+public class StaminaHandler {
 
     public static void handleStamina(ServerPlayerEntity player, PlayerStats stats) {
         boolean wants = stats.isWantsToSprint();

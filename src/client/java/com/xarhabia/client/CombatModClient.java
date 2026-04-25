@@ -1,15 +1,14 @@
 package com.xarhabia.client;
 
-import com.xarhabia.client.hud.StaminaHud;
-import com.xarhabia.client.network.ClientStaminaData;
-import com.xarhabia.network.SprintInputPacket;
+import com.xarhabia.client.stamina.StaminaHud;
+import com.xarhabia.client.stamina.ClientStaminaData;
+import com.xarhabia.sprint.SprintInputPacket;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
-import com.xarhabia.network.StaminaSyncPacket;
+import com.xarhabia.stamina.StaminaSyncPacket;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.network.PacketByteBuf;
-import org.lwjgl.glfw.GLFW;
 
 public class CombatModClient implements ClientModInitializer {
 

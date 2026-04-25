@@ -1,8 +1,8 @@
-package com.xarhabia.service;
+package com.xarhabia.combat;
 
-import com.xarhabia.config.StatConfig;
-import com.xarhabia.manager.PlayerStatsManager;
-import com.xarhabia.model.PlayerStats;
+import com.xarhabia.stats.StatConfig;
+import com.xarhabia.stats.PlayerStatsManager;
+import com.xarhabia.stats.PlayerStats;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.Box;

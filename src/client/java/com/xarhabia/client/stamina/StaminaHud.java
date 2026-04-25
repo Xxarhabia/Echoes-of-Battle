@@ -1,6 +1,5 @@
-package com.xarhabia.client.hud;
+package com.xarhabia.client.stamina;
 
-import com.xarhabia.client.network.ClientStaminaData;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.MinecraftClient;
 

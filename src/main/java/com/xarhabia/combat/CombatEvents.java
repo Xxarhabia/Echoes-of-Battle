@@ -1,11 +1,9 @@
-package com.xarhabia.event;
+package com.xarhabia.combat;
 
-import com.xarhabia.manager.PlayerStatsManager;
-import com.xarhabia.model.PlayerStats;
-import com.xarhabia.service.AoECombatService;
-import com.xarhabia.service.CombatVisualService;
-import com.xarhabia.service.CombatXpService;
-import com.xarhabia.service.ProgressionService;
+import com.xarhabia.stats.PlayerStatsManager;
+import com.xarhabia.stats.PlayerStats;
+import com.xarhabia.progression.XpService;
+import com.xarhabia.progression.ProgressionService;
 import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.ActionResult;
@@ -46,7 +44,7 @@ public class CombatEvents {
                 ProgressionService.addXp(player, 1);
 
                 if(target.isDead() || target.getHealth() <= 0) {
-                    int xp = CombatXpService.getXpForKill(target);
+                    int xp = XpService.getXpForKill(target);
                     ProgressionService.addXp(player, xp);
 
                     System.out.println("Mob Eliminado: " + target.getName().getString());

@@ -1,9 +1,9 @@
-package com.xarhabia.service;
+package com.xarhabia.progression;
 
 
-import com.xarhabia.config.StatConfig;
-import com.xarhabia.manager.PlayerStatsManager;
-import com.xarhabia.model.PlayerStats;
+import com.xarhabia.stats.StatConfig;
+import com.xarhabia.stats.PlayerStatsManager;
+import com.xarhabia.stats.PlayerStats;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.player.PlayerEntity;
 

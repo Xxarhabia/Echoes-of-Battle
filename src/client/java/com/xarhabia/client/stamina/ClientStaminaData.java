@@ -1,4 +1,4 @@
-package com.xarhabia.client.network;
+package com.xarhabia.client.stamina;
 
 public class ClientStaminaData {
 
