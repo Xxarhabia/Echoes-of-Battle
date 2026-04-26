@@ -1,6 +1,8 @@
 package com.xarhabia;
 
 import com.xarhabia.combat.CombatEvents;
+import com.xarhabia.config.ModEvents;
+import com.xarhabia.item.ModItems;
 import com.xarhabia.stats.PlayerStatsManager;
 import com.xarhabia.stats.PlayerStats;
 import com.xarhabia.sprint.SprintInputPacket;
@@ -17,6 +19,8 @@ public class CombatMod implements ModInitializer {
 	@Override
 	public void onInitialize() {
 
+		ModItems.register();
+		ModEvents.register();
 		CombatEvents.register();
 		PlayerTickHandler.register();
 

@@ -1,5 +1,6 @@
 package com.xarhabia.client;
 
+import com.xarhabia.client.item.CustomSwordItem;
 import com.xarhabia.client.stamina.StaminaHud;
 import com.xarhabia.client.stamina.ClientStaminaData;
 import com.xarhabia.sprint.SprintInputPacket;
@@ -34,18 +35,6 @@ public class CombatModClient implements ClientModInitializer {
 
 			boolean current = client.player.isSprinting();
 
-			if (client.player.age % 20 == 0) {
-				var vel = client.player.getVelocity();
-				double speed = Math.sqrt(vel.x * vel.x + vel.z * vel.z);
-
-				System.out.println(
-						"CLIENT SPEED: " + speed +
-								" | X: " + vel.x +
-								" | Z: " + vel.z +
-								" | SPRINTING: " + current
-				);
-			}
-
 			if (current != lastState) {
 				PacketByteBuf buf = PacketByteBufs.create();
 				buf.writeBoolean(current); //empaquetado
@@ -54,6 +43,7 @@ public class CombatModClient implements ClientModInitializer {
 			}
 		});
 
+		CustomSwordItem.register();
 		StaminaHud.register();
 	}
 }
