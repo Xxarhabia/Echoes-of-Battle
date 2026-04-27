@@ -41,7 +41,6 @@ public class CombatEvents {
                     stats.resetHitCounter();
                 }
 
-                ProgressionService.addXp(player, 1);
 
                 if(target.isDead() || target.getHealth() <= 0) {
                     int xp = XpService.getXpForKill(target);

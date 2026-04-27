@@ -82,14 +82,18 @@ public class PlayerStats {
         return 100 + (agility * 2);
     }
 
+    public int getRequiredXp() {
+        return 10 + (level * level * 8);
+    }
+
     public void addXp(int amount) {
         this.xp += amount;
 
-        while (xp >= level * 10) {
+        while (xp >= getRequiredXp()) {
             xp -= level * 10;
             level++;
 
-            addStatPoints(5);
+            addStatPoints(2);
 
             criticChance += 0.01;
             criticDamage += 0.05;
