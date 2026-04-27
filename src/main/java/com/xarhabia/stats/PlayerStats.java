@@ -4,6 +4,7 @@ public class PlayerStats {
 
     private int xp;
     private int level;
+    private int statPoints;
 
     private double criticChance;
     private double criticDamage;
@@ -26,6 +27,7 @@ public class PlayerStats {
     public PlayerStats() {
         this.xp = 0;
         this.level = 1;
+        this.statPoints = 0;
 
         this.criticChance = 0.1;
         this.criticDamage = 1.5;
@@ -42,6 +44,22 @@ public class PlayerStats {
         this.agility = 1;
         this.maxStamina = 100;
         this.stamina = maxStamina;
+    }
+
+    public int getStatPoints() {
+        return statPoints;
+    }
+
+    public void addStatPoints(int points) {
+        this.statPoints += points;
+    }
+
+    public boolean spendPoint() {
+        if (statPoints > 0) {
+            statPoints--;
+            return true;
+        }
+        return false;
     }
 
     public boolean isWantsToSprint() {
@@ -71,9 +89,7 @@ public class PlayerStats {
             xp -= level * 10;
             level++;
 
-            strength++;
-            vitality++;
-            agility++;
+            addStatPoints(5);
 
             criticChance += 0.01;
             criticDamage += 0.05;
@@ -98,8 +114,16 @@ public class PlayerStats {
         return level;
     }
 
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
     public int getXp() {
         return xp;
+    }
+
+    public void setXp(int xp) {
+        this.xp = xp;
     }
 
     public double getCriticDamage() {
@@ -137,6 +161,9 @@ public class PlayerStats {
     public int getStrength() {
         return strength;
     }
+    public void setStrength(int strength) {
+        this.strength = strength;
+    }
 
     public int getVitality() {
         return vitality;
@@ -144,5 +171,9 @@ public class PlayerStats {
 
     public int getAgility() {
         return agility;
+    }
+
+    public void setAgility(int agility) {
+        this.agility = agility;
     }
 }

@@ -13,9 +13,7 @@ public class ProgressionService {
         PlayerStats stats = PlayerStatsManager.getStats(player.getUuid());
         stats.addXp(amount);
 
-        applyVitality(player);
-        applyAgility(player);
-        System.out.println("XP added: " + stats.getXp());
+        System.out.println("Subiste de nivel: " + stats.getXp());
     }
 
     public static float calculateDamage(PlayerEntity player, float baseDamage) {

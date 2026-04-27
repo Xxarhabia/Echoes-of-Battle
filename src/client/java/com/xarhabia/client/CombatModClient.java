@@ -1,5 +1,6 @@
 package com.xarhabia.client;
 
+import com.xarhabia.client.gui.StatsScreen;
 import com.xarhabia.client.item.CustomSwordItem;
 import com.xarhabia.client.stamina.StaminaHud;
 import com.xarhabia.client.stamina.ClientStaminaData;
@@ -10,6 +11,7 @@ import com.xarhabia.stamina.StaminaSyncPacket;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.network.PacketByteBuf;
+import org.lwjgl.glfw.GLFW;
 
 public class CombatModClient implements ClientModInitializer {
 
@@ -40,6 +42,15 @@ public class CombatModClient implements ClientModInitializer {
 				buf.writeBoolean(current); //empaquetado
 				ClientPlayNetworking.send(SprintInputPacket.ID, buf); //envio al servidor
 				lastState = current;
+			}
+		});
+
+		ClientTickEvents.END_CLIENT_TICK.register(client -> {
+			if (client.player == null) return;
+			if (GLFW.glfwGetKey(client.getWindow().getHandle(), GLFW.GLFW_KEY_K) == GLFW.GLFW_PRESS) {
+				client.setScreen(new StatsScreen()
+
+				);
 			}
 		});
 

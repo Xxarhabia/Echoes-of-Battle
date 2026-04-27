@@ -3,6 +3,8 @@ package com.xarhabia;
 import com.xarhabia.combat.CombatEvents;
 import com.xarhabia.config.ModEvents;
 import com.xarhabia.item.ModItems;
+import com.xarhabia.progression.ProgressionService;
+import com.xarhabia.progression.UpgradeStatPacket;
 import com.xarhabia.stats.PlayerStatsManager;
 import com.xarhabia.stats.PlayerStats;
 import com.xarhabia.sprint.SprintInputPacket;
@@ -36,5 +38,30 @@ public class CombatMod implements ModInitializer {
 					});
 				}
 		);
+
+		ServerPlayNetworking.registerGlobalReceiver(
+				UpgradeStatPacket.ID,
+				(server, player, handler, buf, responseSender) -> {
+					String stat = buf.readString();
+					server.execute(() -> {
+						PlayerStats stats = PlayerStatsManager.getStats(player.getUuid());
+
+						if (!stats.spendPoint()) return;
+
+						switch (stat) {
+							case "AGILITY" -> {
+								stats.setAgility(stats.getAgility() + 1);
+								ProgressionService.applyAgility(player);
+								System.out.println("Agilidad aumentada");
+							}
+							case "STRENGTH" -> {
+								stats.setStrength(stats.getStrength() + 1);
+								System.out.println("Fuerza aumentada");
+							}
+						}
+					});
+				}
+		);
+
 	}
 }
