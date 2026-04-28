@@ -3,6 +3,8 @@ package com.xarhabia.stats;
 public class StatConfig {
 
     //Fuerza
+    public static final int MAX_STRENGTH = 25;
+
     public static final float MAX_DAMAGE_BONUS = 10f;
     public static final float DAMAGE_PER_STR = 0.4f;
 
@@ -13,6 +15,8 @@ public class StatConfig {
     public static final float AOE_DAMAGE_PER_STR = 0.02f;
 
     //Agilidad
+    public static final int MAX_AGILITY = 75;
+
     public static final double MAX_WALK_SPEED = 0.15;
     public static final double MAX_SPRINT_SPEED = 0.25;
 
@@ -23,6 +27,8 @@ public class StatConfig {
     public static final int SPRINT_TIME_PER_AGI = 2;
 
     // VITALIDAD
+    public static final int MAX_VITALITY = 40;
+
     public static final double MAX_HEALTH_BONUS = 40;
     public static final double HEALTH_PER_VIT = 1.0;
 

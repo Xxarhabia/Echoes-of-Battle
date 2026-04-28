@@ -8,6 +8,7 @@ import com.xarhabia.progression.UpgradeStatPacket;
 import com.xarhabia.stats.PlayerStatsManager;
 import com.xarhabia.stats.PlayerStats;
 import com.xarhabia.sprint.SprintInputPacket;
+import com.xarhabia.stats.StatConfig;
 import net.fabricmc.api.ModInitializer;
 
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -46,24 +47,30 @@ public class CombatMod implements ModInitializer {
 					server.execute(() -> {
 						PlayerStats stats = PlayerStatsManager.getStats(player.getUuid());
 
-						if (!stats.spendPoint()) return;
-
 						switch (stat) {
 							case "AGILITY" -> {
+								if (stats.getAgility() >= StatConfig.MAX_AGILITY) return;
+								if (!stats.spendPoint()) return;
+
 								stats.setAgility(stats.getAgility() + 1);
 								ProgressionService.applyAgility(player);
-								System.out.println("Agilidad aumentada");
 							}
 							case "STRENGTH" -> {
+								if (stats.getStrength() >= StatConfig.MAX_STRENGTH) return;
+								if (!stats.spendPoint()) return;
+
 								stats.setStrength(stats.getStrength() + 1);
 								System.out.println("Fuerza aumentada");
 							}
 							case "VITALITY" -> {
+								if (stats.getVitality() >= StatConfig.MAX_VITALITY) return;
+								if (!stats.spendPoint()) return;
+
 								stats.setVitality(stats.getVitality() + 1);
 								ProgressionService.applyVitality(player);
-								System.out.println("Vitalidad aumentada");
 							}
 						}
+
 					});
 				}
 		);
