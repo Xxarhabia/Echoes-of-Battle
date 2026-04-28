@@ -173,6 +173,10 @@ public class PlayerStats {
         return vitality;
     }
 
+   public void setVitality(int vitality) {
+        this.vitality = vitality;
+   }
+
     public int getAgility() {
         return agility;
     }

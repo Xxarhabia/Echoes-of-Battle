@@ -43,7 +43,10 @@ public class ProgressionService {
                 StatConfig.MAX_HEALTH_BONUS
         );
 
-        player.getAttributeInstance(EntityAttributes.GENERIC_MAX_HEALTH).setBaseValue(20 + extraHealth);
+        player.getAttributeInstance(EntityAttributes.GENERIC_MAX_HEALTH)
+                .setBaseValue(20 + extraHealth);
+
+        player.setHealth(player.getMaxHealth());
         System.out.println("Vitalidad aumentada: " + stats.getVitality());
     }
 

@@ -58,6 +58,11 @@ public class CombatMod implements ModInitializer {
 								stats.setStrength(stats.getStrength() + 1);
 								System.out.println("Fuerza aumentada");
 							}
+							case "VITALITY" -> {
+								stats.setVitality(stats.getVitality() + 1);
+								ProgressionService.applyVitality(player);
+								System.out.println("Vitalidad aumentada");
+							}
 						}
 					});
 				}

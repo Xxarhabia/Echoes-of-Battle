@@ -1,6 +1,7 @@
 package com.xarhabia.client;
 
 import com.xarhabia.client.gui.StatsScreen;
+import com.xarhabia.client.gui.hud.HintHud;
 import com.xarhabia.client.item.CustomSwordItem;
 import com.xarhabia.client.stamina.StaminaHud;
 import com.xarhabia.client.stamina.ClientStaminaData;
@@ -56,5 +57,6 @@ public class CombatModClient implements ClientModInitializer {
 
 		CustomSwordItem.register();
 		StaminaHud.register();
+		HintHud.drawStatsHint();
 	}
 }
