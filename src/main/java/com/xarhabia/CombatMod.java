@@ -2,6 +2,8 @@ package com.xarhabia;
 
 import com.xarhabia.combat.CombatEvents;
 import com.xarhabia.config.ModEvents;
+import com.xarhabia.entities.ModEntities;
+import com.xarhabia.entities.val.ValSpawnEvents;
 import com.xarhabia.item.ModItems;
 import com.xarhabia.progression.ProgressionService;
 import com.xarhabia.progression.UpgradeStatPacket;
@@ -26,6 +28,9 @@ public class CombatMod implements ModInitializer {
 		ModEvents.register();
 		CombatEvents.register();
 		PlayerTickHandler.register();
+		ModEntities.register();
+		ModEntities.registerAttributes();
+		ValSpawnEvents.register();
 
 		// Recibimos llamadas del
 		ServerPlayNetworking.registerGlobalReceiver(

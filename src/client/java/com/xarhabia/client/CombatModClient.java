@@ -5,8 +5,11 @@ import com.xarhabia.client.gui.hud.HintHud;
 import com.xarhabia.client.item.CustomSwordItem;
 import com.xarhabia.client.stamina.StaminaHud;
 import com.xarhabia.client.stamina.ClientStaminaData;
+import com.xarhabia.client.val.render.ValEntityRenderer;
+import com.xarhabia.entities.ModEntities;
 import com.xarhabia.sprint.SprintInputPacket;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
+import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import com.xarhabia.stamina.StaminaSyncPacket;
 import net.fabricmc.api.ClientModInitializer;
@@ -20,6 +23,8 @@ public class CombatModClient implements ClientModInitializer {
 
 	@Override
 	public void onInitializeClient() {
+		EntityRendererRegistry.register(ModEntities.VAL, ValEntityRenderer::new);
+
 		ClientPlayNetworking.registerGlobalReceiver(
 				StaminaSyncPacket.ID,
 				(client, handler, buf, responseSender) -> {
