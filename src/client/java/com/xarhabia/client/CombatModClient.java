@@ -5,6 +5,7 @@ import com.xarhabia.client.gui.hud.HintHud;
 import com.xarhabia.client.item.CustomSwordItem;
 import com.xarhabia.client.stamina.StaminaHud;
 import com.xarhabia.client.stamina.ClientStaminaData;
+import com.xarhabia.client.val.ValScreen;
 import com.xarhabia.client.val.render.ValEntityRenderer;
 import com.xarhabia.entities.ModEntities;
 import com.xarhabia.sprint.SprintInputPacket;
@@ -15,6 +16,7 @@ import com.xarhabia.stamina.StaminaSyncPacket;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.network.PacketByteBuf;
+import net.minecraft.util.Identifier;
 import org.lwjgl.glfw.GLFW;
 
 public class CombatModClient implements ClientModInitializer {
@@ -23,7 +25,6 @@ public class CombatModClient implements ClientModInitializer {
 
 	@Override
 	public void onInitializeClient() {
-		EntityRendererRegistry.register(ModEntities.VAL, ValEntityRenderer::new);
 
 		ClientPlayNetworking.registerGlobalReceiver(
 				StaminaSyncPacket.ID,
@@ -59,6 +60,16 @@ public class CombatModClient implements ClientModInitializer {
 				);
 			}
 		});
+
+		EntityRendererRegistry.register(ModEntities.VAL, ValEntityRenderer::new);
+
+		ClientPlayNetworking.registerGlobalReceiver(
+				new Identifier("combatmod", "open_val_screen"),
+				(client, handler, buf, responseSender) -> {
+					int valEntityId = buf.readInt();
+					client.execute(() -> client.setScreen(new ValScreen(valEntityId)));
+				}
+		);
 
 		CustomSwordItem.register();
 		StaminaHud.register();

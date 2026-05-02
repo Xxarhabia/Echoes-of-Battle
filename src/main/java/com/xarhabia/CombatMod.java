@@ -3,6 +3,7 @@ package com.xarhabia;
 import com.xarhabia.combat.CombatEvents;
 import com.xarhabia.config.ModEvents;
 import com.xarhabia.entities.ModEntities;
+import com.xarhabia.entities.val.ValEntity;
 import com.xarhabia.entities.val.ValSpawnEvents;
 import com.xarhabia.item.ModItems;
 import com.xarhabia.progression.ProgressionService;
@@ -14,6 +15,7 @@ import com.xarhabia.stats.StatConfig;
 import net.fabricmc.api.ModInitializer;
 
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,6 +33,7 @@ public class CombatMod implements ModInitializer {
 		ModEntities.register();
 		ModEntities.registerAttributes();
 		ValSpawnEvents.register();
+		registerServerPackets();
 
 		// Recibimos llamadas del
 		ServerPlayNetworking.registerGlobalReceiver(
@@ -80,5 +83,35 @@ public class CombatMod implements ModInitializer {
 				}
 		);
 
+	}
+
+	private static void registerServerPackets() {
+		// Jugador eligio recuperar
+		ServerPlayNetworking.registerGlobalReceiver(
+				new Identifier("combatmod", "val_recover"),
+				(server, player, handler, buf, responseSender) -> {
+					int valEntityId = buf.readInt();
+					server.execute(() -> {
+						ValEntity val = (ValEntity) player.getWorld().getEntityById(valEntityId);
+						if (val != null) {
+							val.returnInventory(player);
+							val.discard();
+						}
+					});
+				}
+		);
+
+		ServerPlayNetworking.registerGlobalReceiver(
+				new Identifier("combatmod", "val_decline"),
+				(server, player, handler, buf, responseSender) -> {
+					int valEntityId = buf.readInt();
+					server.execute(() -> {
+						ValEntity val = (ValEntity) player.getWorld().getEntityById(valEntityId);
+						if (val != null) {
+							val.discard();
+						}
+					});
+				}
+		);
 	}
 }
