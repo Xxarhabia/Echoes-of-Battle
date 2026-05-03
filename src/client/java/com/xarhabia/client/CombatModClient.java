@@ -5,9 +5,12 @@ import com.xarhabia.client.gui.hud.HintHud;
 import com.xarhabia.client.item.CustomSwordItem;
 import com.xarhabia.client.stamina.StaminaHud;
 import com.xarhabia.client.stamina.ClientStaminaData;
+import com.xarhabia.client.val.ValHealthData;
+import com.xarhabia.client.val.ValHud;
 import com.xarhabia.client.val.ValScreen;
 import com.xarhabia.client.val.render.ValEntityRenderer;
 import com.xarhabia.entities.ModEntities;
+import com.xarhabia.entities.val.networking.ValHealthPacket;
 import com.xarhabia.sprint.SprintInputPacket;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
@@ -71,6 +74,23 @@ public class CombatModClient implements ClientModInitializer {
 				}
 		);
 
+		ClientPlayNetworking.registerGlobalReceiver(
+				ValHealthPacket.ID,
+				(client, handler, buf, responseSender) -> {
+					float health = buf.readFloat();
+					float maxHealth = buf.readFloat();
+					boolean isAngry = buf.readBoolean();
+					client.execute(() -> {
+						ValHealthData.health = health;
+						ValHealthData.maxHealth = maxHealth;
+						ValHealthData.isAngry = isAngry;
+						ValHealthData.visible = true;
+						ValHealthData.hideTimer = 5 * 20;
+					});
+				}
+		);
+
+		ValHud.register();
 		CustomSwordItem.register();
 		StaminaHud.register();
 		HintHud.drawStatsHint();

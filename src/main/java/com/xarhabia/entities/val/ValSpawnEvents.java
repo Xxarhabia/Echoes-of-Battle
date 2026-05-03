@@ -17,7 +17,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-import java.rmi.registry.Registry;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -25,6 +24,7 @@ import java.util.Optional;
 public class ValSpawnEvents {
 
     public static void register() {
+        registerValReset();
         registerInventoryRetention();
         registerDeathEvent();
         registerCommand();
@@ -33,6 +33,27 @@ public class ValSpawnEvents {
     // Map temporal para pasar el inventario de la muerte al spawn de Val
     private static final java.util.Map<java.util.UUID, List<ItemStack>> pendingInventories =
             new java.util.HashMap<>();
+
+    private static void registerValReset() {
+        ServerPlayerEvents.ALLOW_DEATH.register((player, damageSource, damageAmount) -> {
+            ServerWorld world = (ServerWorld) player.getWorld();
+
+            // Diferir al siguiente tick para evitar ConcurrentModificationException
+            world.getServer().execute(() -> {
+                List<ValEntity> vals = world.getEntitiesByClass(
+                        ValEntity.class,
+                        player.getBoundingBox().expand(64),
+                        val -> true
+                );
+
+                for (ValEntity val : vals) {
+                    val.resetToPassive();
+                }
+            });
+
+            return true;
+        });
+    }
 
     private static void registerInventoryRetention() {
         ServerPlayerEvents.ALLOW_DEATH.register((player, damageSource, damageAmount) -> {
